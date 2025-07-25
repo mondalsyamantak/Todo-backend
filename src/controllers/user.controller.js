@@ -58,13 +58,13 @@ const registerUser = asyncHandler(async (req, res) => {
 })
 
 const loginUser = asyncHandler(async (req, res) => {
-    const {username, password} = req.body;
+    const {email, password} = req.body;
 
-    if ((!username) || (!password)){
+    if ((!email) || (!password)){
         throw new ApiError(400, "Username or password cannot be empty")
     }
 
-    const user = await User.findOne ({ username });
+    const user = await User.findOne ({ email });
     //this user object has the (encrypted password)
 
     if(!user) {
@@ -126,6 +126,10 @@ const logoutUser = asyncHandler(async (req, res) => {
     .clearCookie("accessToken", options)
     .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, {}, "user logged out successfully"))
+})
+
+const verifyUser = asyncHandler(async (req, res) => {
+    
 })
 
 
