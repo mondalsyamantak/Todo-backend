@@ -24,7 +24,7 @@ const verifyJWT = asyncHandler(async (req, res, next) => {
         }
     
         req.user = user; //forwarding the user to the next middleware
-        //console.log("User",user._id)
+        console.log("User",user._id)
         next(); //executing next
     } catch (error) {
         throw new ApiError(469, "Unauthorised access blocked: ", error)

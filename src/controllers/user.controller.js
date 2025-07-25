@@ -129,8 +129,24 @@ const logoutUser = asyncHandler(async (req, res) => {
 })
 
 const verifyUser = asyncHandler(async (req, res) => {
+
+        //console.log("reached stage 2")
     
-})
+        try {
+            const user = await User.findById(req.user?._id).select("-password -refreshToken")
+
+            if (!user) {
+                throw new ApiResponse(404, null, "User not found");
+            }
+
+            return res
+            .status(200)
+            .json(new ApiResponse(200, user, "User authenticated successfully"));
+        } catch (error) {
+            throw new ApiResponse(500, null, "Error while authenticating user", error);
+        }
+    }
+)
 
 
 
@@ -140,4 +156,4 @@ const verifyUser = asyncHandler(async (req, res) => {
 
 
 
-export {registerUser, loginUser, logoutUser}
+export {registerUser, loginUser, logoutUser, verifyUser}
