@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
+import { Task } from "../models/task.model.js";
 
 
 const generateBothTokens = async (userId) => {
@@ -192,6 +193,16 @@ const deleteUser = asyncHandler(async (req, res) => {
     await User.findByIdAndDelete(req.user._id)
     .catch((err) => {
         new ApiError(500, "Something went wrong")
+    })
+
+    await Task.deleteMany({
+        where: {
+            userId: req.user._id
+        }
+    })
+    .catch((err) => {
+        console.log(err, "error in user.controller.js")
+        new ApiError(400, "Something went wrong")
     })
 
     return res
