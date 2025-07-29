@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser"
 
 //creating app and using middlewares
 const app = express();
-var whitelist = ['http://example1.com', 'http://example2.com']
+var whitelist = ['http://localhost:5173', process.env.CORS_ORIGIN]
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
