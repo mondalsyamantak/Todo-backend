@@ -4,10 +4,16 @@ import cookieParser from "cookie-parser"
 
 //creating app and using middlewares
 const app = express();
-app.use(cors({
-  origin: process.env.CORS_ORIGIN,
-  credentials: true,
-}));
+var whitelist = ['http://localhost:5173', process.env.CORS_ORIGIN]
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
 
 app.use(express.json({
     limit: "50mb"  
