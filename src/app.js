@@ -7,7 +7,7 @@ const app = express();
 var whitelist = ['http://localhost:5173', process.env.CORS_ORIGIN]
 var corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
