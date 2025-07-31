@@ -39,7 +39,14 @@ import userRoutes from "./routes/user.route.js";
 
 //routes declaration:
 app.use("/api/tasks", taskRoutes);
-app.use("/api/users", userRoutes)
+app.use("/api/users", userRoutes);
+
+
+//head route for setting up uptime bot
+app.head('/status', (req, res) => {
+  res.set('Custom-Header', 'value');
+  res.status(200).end();  // No body, just headers
+});
 
 
 //to send the errors to the data object
